@@ -21,7 +21,7 @@ function SpendingByCategoryChart({ transactions }) {
   const data = Object.entries(totalsByCategory).map(([category, amount], index) => ({
     name: toTitleCase(category),
     value: amount,
-    color: category === 'housing' ? '#a23b2e' : COLORS[index % COLORS.length],
+    color: COLORS[index % COLORS.length],
   }))
 
   if (data.length === 0) {
