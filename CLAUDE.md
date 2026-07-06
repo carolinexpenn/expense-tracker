@@ -31,13 +31,27 @@ This is a plain Vite + React 19 app with no router, no state management library,
 everything is client-side and in-memory.
 
 - `src/main.jsx` — entry point, mounts `<App />` into `#root` inside `StrictMode`.
-- `src/App.jsx` — the entire application. All state (transactions list and form inputs), derived
-  calculations (income/expense/balance totals, filtering), and JSX markup live in this single
-  component. There are no subcomponents, hooks, or utility modules yet.
+- `src/App.jsx` — top-level component. Owns the `transactions` state (source of truth) and the
+  `categories` list, and composes the app from three child components. Passes `transactions` down
+  as props and an `onAddTransaction` callback to `TransactionForm`; components below do not lift
+  state back up beyond that.
+- `src/Summary.jsx` — takes `transactions` as a prop and derives `totalIncome`, `totalExpenses`,
+  and `balance` itself (not passed in from `App`); renders the three summary cards.
+- `src/TransactionForm.jsx` — owns its own form-input state (description/amount/type/category)
+  locally via `useState`; on submit, builds the new transaction object and calls the
+  `onAddTransaction` prop, then resets its own inputs. `App.jsx` has no knowledge of form-field
+  state.
+- `src/TransactionList.jsx` — takes `transactions` and `categories` as props and owns its own
+  `filterType`/`filterCategory` state locally; filtering logic lives here, not in `App.jsx`.
 - Transaction data is hardcoded initial state (`useState`) in `App.jsx` — there is no persistence
-  (no localStorage, no API), so all data resets on page reload.
-- Styling is plain CSS in `src/App.css` and `src/index.css` (no CSS framework or CSS-in-JS).
+  (no localStorage, no API), so all data resets on page reload. Transaction `amount` is stored as
+  a `number` (not a string) — keep it that way, since summing string amounts was a real bug that
+  was fixed.
+- Styling is plain CSS in `src/App.css` and `src/index.css` (no CSS framework or CSS-in-JS,
+  and no per-component stylesheets — new components reuse existing class names).
 
-Because the whole app is one component, any feature work (e.g., editing/deleting transactions,
-persistence, splitting out components) will likely mean expanding `App.jsx` or extracting pieces
-out of it — there's no existing pattern to follow beyond what's already there.
+The pattern established across these extractions: a component that both reads and derives from
+`transactions`/`categories` computes its own derived values from raw props rather than receiving
+pre-computed values, and a component that owns UI-local state (form inputs, filters) keeps that
+state internal rather than lifting it into `App.jsx`. Follow this pattern for further extractions
+(e.g. a single `TransactionRow`) rather than centralizing state back in `App.jsx`.
