@@ -48,9 +48,10 @@ function SpendingByCategoryChart({ transactions }) {
             tick={{ fill: INK_SOFT, fontFamily: 'IBM Plex Mono, monospace', fontSize: 11 }}
             axisLine={{ stroke: RULE }}
             tickLine={{ stroke: RULE }}
+            tickFormatter={(value) => value.toLocaleString('en-GB')}
           />
           <Tooltip
-            formatter={(value) => `£${value}`}
+            formatter={(value) => `£${value.toLocaleString('en-GB')}`}
             contentStyle={{
               background: SURFACE,
               border: `1px solid ${RULE}`,
