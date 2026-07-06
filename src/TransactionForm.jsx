@@ -5,20 +5,31 @@ function TransactionForm({ categories, onAddTransaction }) {
   const [amount, setAmount] = useState("");
   const [type, setType] = useState("expense");
   const [category, setCategory] = useState("food");
+  const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!description || !amount) return;
+
+    const trimmedDescription = description.trim();
+    if (!trimmedDescription) {
+      setError("Enter a description.");
+      return;
+    }
+    if (!(Number(amount) > 0)) {
+      setError("Enter an amount greater than 0.");
+      return;
+    }
 
     onAddTransaction({
       id: Date.now(),
-      description,
+      description: trimmedDescription,
       amount: Number(amount),
       type,
       category,
       date: new Date().toISOString().split('T')[0],
     });
 
+    setError("");
     setDescription("");
     setAmount("");
     setType("expense");
@@ -28,7 +39,8 @@ function TransactionForm({ categories, onAddTransaction }) {
   return (
     <div className="add-transaction">
       <h2>New Entry</h2>
-      <form onSubmit={handleSubmit}>
+      {error && <p className="form-error">{error}</p>}
+      <form onSubmit={handleSubmit} noValidate>
         <input
           type="text"
           placeholder="Description"
@@ -39,6 +51,8 @@ function TransactionForm({ categories, onAddTransaction }) {
           type="number"
           placeholder="Amount"
           value={amount}
+          min="0.01"
+          step="0.01"
           onChange={(e) => setAmount(e.target.value)}
         />
         <select value={type} onChange={(e) => setType(e.target.value)}>

@@ -50,7 +50,7 @@ function SpendingByCategoryChart({ transactions }) {
             tickLine={{ stroke: RULE }}
           />
           <Tooltip
-            formatter={(value) => `$${value}`}
+            formatter={(value) => `£${value}`}
             contentStyle={{
               background: SURFACE,
               border: `1px solid ${RULE}`,

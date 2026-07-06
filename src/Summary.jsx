@@ -13,16 +13,16 @@ function Summary({ transactions }) {
     <div className="tally">
       <div className="tally-item">
         <span className="tally-label">Income</span>
-        <span className="tally-amount">${totalIncome}</span>
+        <span className="tally-amount">£{totalIncome}</span>
       </div>
       <div className="tally-item">
         <span className="tally-label">Expenses</span>
-        <span className="tally-amount tally-amount--expense">${totalExpenses}</span>
+        <span className="tally-amount tally-amount--expense">£{totalExpenses}</span>
       </div>
       <div className="tally-item tally-item--total">
         <span className="tally-label">Balance</span>
         <span className={`tally-amount ${balance < 0 ? "tally-amount--expense" : ""}`}>
-          ${balance}
+          £{balance}
         </span>
       </div>
     </div>
