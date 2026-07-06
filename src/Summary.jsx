@@ -10,18 +10,20 @@ function Summary({ transactions }) {
   const balance = totalIncome - totalExpenses;
 
   return (
-    <div className="summary">
-      <div className="summary-card">
-        <h3>Income</h3>
-        <p className="income-amount">${totalIncome}</p>
+    <div className="tally">
+      <div className="tally-item">
+        <span className="tally-label">Income</span>
+        <span className="tally-amount">${totalIncome}</span>
       </div>
-      <div className="summary-card">
-        <h3>Expenses</h3>
-        <p className="expense-amount">${totalExpenses}</p>
+      <div className="tally-item">
+        <span className="tally-label">Expenses</span>
+        <span className="tally-amount tally-amount--expense">${totalExpenses}</span>
       </div>
-      <div className="summary-card">
-        <h3>Balance</h3>
-        <p className="balance-amount">${balance}</p>
+      <div className="tally-item tally-item--total">
+        <span className="tally-label">Balance</span>
+        <span className={`tally-amount ${balance < 0 ? "tally-amount--expense" : ""}`}>
+          ${balance}
+        </span>
       </div>
     </div>
   );

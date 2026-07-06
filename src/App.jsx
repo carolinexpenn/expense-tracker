@@ -29,6 +29,7 @@ function App() {
 
   return (
     <div className="app">
+      <span className="eyebrow">Personal Ledger</span>
       <h1>Finance Tracker</h1>
       <p className="subtitle">Track your income and expenses</p>
 

@@ -27,7 +27,7 @@ function TransactionForm({ categories, onAddTransaction }) {
 
   return (
     <div className="add-transaction">
-      <h2>Add Transaction</h2>
+      <h2>New Entry</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -50,7 +50,7 @@ function TransactionForm({ categories, onAddTransaction }) {
             <option key={cat} value={cat}>{cat}</option>
           ))}
         </select>
-        <button type="submit">Add</button>
+        <button type="submit">Record entry</button>
       </form>
     </div>
   );
